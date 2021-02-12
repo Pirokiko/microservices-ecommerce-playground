@@ -1,0 +1,134 @@
+databaseChangeLog:
+- changeSet:
+    id: 1613137009026-1
+    author: milan (generated)
+    changes:
+    - createSequence:
+        incrementBy: 50
+        sequenceName: order_id_seq
+        startValue: 1
+- changeSet:
+    id: 1613137009026-2
+    author: milan (generated)
+    changes:
+    - createSequence:
+        incrementBy: 50
+        sequenceName: order_item_id_seq
+        startValue: 1
+- changeSet:
+    id: 1613137009026-3
+    author: milan (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: orderPK
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: customer_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: order_number
+            type: VARCHAR(255)
+        - column:
+            name: payment_id
+            type: BIGINT
+        - column:
+            name: payment_status
+            type: BIGINT
+        - column:
+            name: verified
+            type: BOOLEAN
+        tableName: order
+- changeSet:
+    id: 1613137009026-4
+    author: milan (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: order_itemPK
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: product_cost
+            type: FLOAT8
+        - column:
+            constraints:
+              nullable: false
+            name: product_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: quantity
+            type: BIGINT
+        - column:
+            name: verified
+            type: BOOLEAN
+        tableName: order_item
+- changeSet:
+    id: 1613137009026-5
+    author: milan (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: order_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: items_id
+            type: BIGINT
+        tableName: order_items
+- changeSet:
+    id: 1613137009026-6
+    author: milan (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: items_id
+        constraintName: UK_d0vxbj4gqklaa3ro4kja2h72x
+        tableName: order_items
+- changeSet:
+    id: 1613137009026-7
+    author: milan (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: items_id
+        baseTableName: order_items
+        constraintName: FKbjrm6xsk629xk4k9nl6lybp4h
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: order_item
+        validate: true
+- changeSet:
+    id: 1613137009026-8
+    author: milan (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: order_id
+        baseTableName: order_items
+        constraintName: FKdy6l1ieu09exdjope704jwo1e
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: order
+        validate: true
+

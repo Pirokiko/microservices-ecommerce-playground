@@ -1,0 +1,25 @@
+databaseChangeLog:
+- changeSet:
+    id: 1613137026197-1
+    author: milan (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: paymentPK
+            name: id
+            type: UUID
+        - column:
+            name: amount
+            type: FLOAT8
+        - column:
+            name: amount_payed
+            type: FLOAT8
+        - column:
+            name: status
+            type: INTEGER
+        tableName: payment
+

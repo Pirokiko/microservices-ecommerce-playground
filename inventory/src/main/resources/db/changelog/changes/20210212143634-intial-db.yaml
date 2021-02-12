@@ -1,0 +1,80 @@
+databaseChangeLog:
+- changeSet:
+    id: 1613137000387-1
+    author: milan (generated)
+    changes:
+    - createSequence:
+        incrementBy: 50
+        sequenceName: inventory_id_seq
+        startValue: 1
+- changeSet:
+    id: 1613137000387-2
+    author: milan (generated)
+    changes:
+    - createSequence:
+        incrementBy: 50
+        sequenceName: product_id_seq
+        startValue: 1
+- changeSet:
+    id: 1613137000387-3
+    author: milan (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: inventoryPK
+            name: id
+            type: BIGINT
+        - column:
+            name: available
+            type: BIGINT
+        - column:
+            name: product_id
+            type: BIGINT
+        tableName: inventory
+- changeSet:
+    id: 1613137000387-4
+    author: milan (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: productPK
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: barcode
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: cost
+            type: FLOAT8
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(255)
+        tableName: product
+- changeSet:
+    id: 1613137000387-5
+    author: milan (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: product_id
+        baseTableName: inventory
+        constraintName: FKp7gj4l80fx8v0uap3b2crjwp5
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: product
+        validate: true
+

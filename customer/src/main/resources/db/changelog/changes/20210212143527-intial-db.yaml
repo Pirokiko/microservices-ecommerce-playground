@@ -1,0 +1,131 @@
+databaseChangeLog:
+- changeSet:
+    id: 1613136932649-1
+    author: milan (generated)
+    changes:
+    - createSequence:
+        incrementBy: 50
+        sequenceName: address_id_seq
+        startValue: 1
+- changeSet:
+    id: 1613136932649-2
+    author: milan (generated)
+    changes:
+    - createSequence:
+        incrementBy: 50
+        sequenceName: customer_id_seq
+        startValue: 1
+- changeSet:
+    id: 1613136932649-3
+    author: milan (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: addressPK
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: house_number
+            type: INTEGER
+        - column:
+            name: house_number_addition
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: street
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: zip_code
+            type: VARCHAR(255)
+        tableName: address
+- changeSet:
+    id: 1613136932649-4
+    author: milan (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: customerPK
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR(255)
+        - column:
+            name: name
+            type: VARCHAR(255)
+        tableName: customer
+- changeSet:
+    id: 1613136932649-5
+    author: milan (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: customer_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: addresses_id
+            type: BIGINT
+        tableName: customer_addresses
+- changeSet:
+    id: 1613136932649-6
+    author: milan (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: addresses_id
+        constraintName: UK_p421kx7b3ifw5w8mfkt6t40gy
+        tableName: customer_addresses
+- changeSet:
+    id: 1613136932649-7
+    author: milan (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: email
+        constraintName: uniuque_email
+        tableName: customer
+- changeSet:
+    id: 1613136932649-8
+    author: milan (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: addresses_id
+        baseTableName: customer_addresses
+        constraintName: FK8s97nbr10j06pjiupyk4ehhom
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: address
+        validate: true
+- changeSet:
+    id: 1613136932649-9
+    author: milan (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: customer_id
+        baseTableName: customer_addresses
+        constraintName: FKt5007akl8ydn1dskefawemfw0
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: customer
+        validate: true
+

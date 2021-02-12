@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: classpath*:db/changelog/changes/20210212143527-intial-db.yaml
