@@ -3,11 +3,9 @@ package dev.pirokiko.commerceshop.order.controller;
 import dev.pirokiko.commerceshop.order.dto.CreateOrderDto;
 import dev.pirokiko.commerceshop.order.entity.Order;
 import dev.pirokiko.commerceshop.order.saga.OrderCreationSaga;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/order")
 public class OrderController {

@@ -1,0 +1,19 @@
+databaseChangeLog:
+- changeSet:
+    id: 1613466831367-1
+    author: milan (generated)
+    changes:
+    - dropColumn:
+        tableName: order
+        columnName: payment_id
+    - addColumn:
+        tableName: order
+        columns:
+          - column:
+              name: payment_id
+              type: UUID
+              beforeColumn: payment_status
+    - modifyDataType:
+        tableName: order
+        columnName: payment_status
+        newDataType: INTEGER

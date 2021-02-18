@@ -1,0 +1,43 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:9004
+  description: Generated server url
+paths:
+  /payment:
+    post:
+      tags:
+      - payment-controller
+      operationId: createPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaymentDto'
+components:
+  schemas:
+    CreatePaymentDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+    PaymentDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        amount:
+          type: number
+          format: double

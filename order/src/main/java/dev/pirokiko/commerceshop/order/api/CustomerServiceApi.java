@@ -1,4 +1,4 @@
-package dev.pirokiko.commerceshop.order.service;
+package dev.pirokiko.commerceshop.order.api;
 
 import dev.pirokiko.commerceshop.order.dto.CustomerDto;
 import dev.pirokiko.commerceshop.order.dto.ProductDto;
@@ -8,10 +8,10 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class CustomerApiService {
+public class CustomerServiceApi {
     private final RestTemplate customerClient;
 
-    public CustomerApiService(@Qualifier("customer") RestTemplate customerClient) {
+    public CustomerServiceApi(@Qualifier("customer") RestTemplate customerClient) {
         this.customerClient = customerClient;
     }
 

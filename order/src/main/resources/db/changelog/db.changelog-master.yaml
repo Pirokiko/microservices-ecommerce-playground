@@ -1,3 +1,7 @@
 databaseChangeLog:
   - include:
       file: classpath*:db/changelog/changes/20210212143643-intial-db.yaml
+  - include:
+      file: classpath*:db/changelog/changes/20210216101344-update-payment-info.yaml
+  - include:
+      file: classpath*:db/changelog/changes/20210216120244-update-order-verification.yaml

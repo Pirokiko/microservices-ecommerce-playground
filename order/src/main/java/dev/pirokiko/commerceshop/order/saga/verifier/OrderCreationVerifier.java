@@ -1,46 +1,55 @@
 package dev.pirokiko.commerceshop.order.saga.verifier;
 
+import dev.pirokiko.commerceshop.order.api.CustomerServiceApi;
+import dev.pirokiko.commerceshop.order.api.InventoryServiceApi;
 import dev.pirokiko.commerceshop.order.dto.CustomerDto;
+import dev.pirokiko.commerceshop.order.dto.OrderVerificationDto;
 import dev.pirokiko.commerceshop.order.dto.ProductDto;
 import dev.pirokiko.commerceshop.order.entity.Order;
 import dev.pirokiko.commerceshop.order.entity.OrderItem;
 import dev.pirokiko.commerceshop.order.repository.OrderRepository;
-import dev.pirokiko.commerceshop.order.service.CustomerApiService;
-import dev.pirokiko.commerceshop.order.service.InventoryApiService;
-import org.springframework.scheduling.annotation.Async;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 
 import javax.validation.constraints.NotNull;
 import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 @Component
-public class OrderCreationVerifier implements Verifier<Order> {
+public class OrderCreationVerifier {
     private final OrderRepository orderRepository;
-    private final InventoryApiService inventoryApi;
-    private final CustomerApiService customerApi;
+    private final InventoryServiceApi inventoryApi;
+    private final CustomerServiceApi customerApi;
 
-    public OrderCreationVerifier(OrderRepository orderRepository, InventoryApiService inventoryApi, CustomerApiService customerApi) {
+    public OrderCreationVerifier(OrderRepository orderRepository, InventoryServiceApi inventoryApi, CustomerServiceApi customerApi) {
         this.orderRepository = orderRepository;
         this.inventoryApi = inventoryApi;
         this.customerApi = customerApi;
     }
 
-    @Override
-    public CompletableFuture<@NotNull Boolean> verify(final Order order) {
+    public CompletableFuture<@NotNull OrderVerificationDto> verifyAsync(final Long orderId) {
+        return CompletableFuture.completedFuture(this.verify(orderId));
+    }
+
+    public @NotNull OrderVerificationDto verify(final Long orderId) {
+        Order order = orderRepository.findByIdWithItems(orderId).orElseThrow();
+
         boolean itemsVerified = checkItems(order);
         boolean customerVerified = checkCustomer(order);
+        boolean verified = itemsVerified && customerVerified;
 
-        return CompletableFuture.completedFuture(itemsVerified && customerVerified);
+        return new OrderVerificationDto(order, verified);
     }
 
     // This is where Spring Cloud Contract comes into play
-    protected boolean checkItems(final Order order) {
+    private boolean checkItems(final Order order) {
         order.getItems().forEach(item -> {
             try {
                 ProductDto productDto = inventoryApi.getProduct(item.getProductId());
                 item.setVerified(!item.getProductCost().equals(productDto.getCost()));
-            }catch (RestClientException e){
+            } catch (RestClientException e) {
+                log.error("api call failed: ", e);
                 item.setVerified(false);
             }
         });
@@ -52,11 +61,11 @@ public class OrderCreationVerifier implements Verifier<Order> {
     }
 
     // This is where Spring Cloud Contract comes into play
-    protected boolean checkCustomer(final Order order) {
+    private boolean checkCustomer(final Order order) {
         try {
             CustomerDto customerDto = customerApi.getCustomer(order.getCustomerId());
             return customerDto != null && customerDto.getId().equals(order.getCustomerId());
-        } catch (RestClientException e){
+        } catch (RestClientException e) {
             return false;
         }
     }

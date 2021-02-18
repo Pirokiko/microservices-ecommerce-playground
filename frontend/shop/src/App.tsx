@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
-import {ProductListing} from "./components/page/ProductListing";
+import {ProductGrid} from "./components/page/ProductGrid";
+import {ShoppingCartProvider} from "./components/providers/ShoppingCartProvider";
 
 function App() {
-  return (
-      <ProductListing />
-  );
+    return (
+        <ShoppingCartProvider>
+            <ProductGrid/>
+        </ShoppingCartProvider>
+    );
 }
 
 export default App;

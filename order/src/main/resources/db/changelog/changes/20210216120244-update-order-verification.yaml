@@ -1,0 +1,8 @@
+databaseChangeLog:
+- changeSet:
+    id: 1618436832347-1
+    author: milan (generated)
+    changes:
+    - dropColumn:
+        tableName: order_item
+        columnName: verified

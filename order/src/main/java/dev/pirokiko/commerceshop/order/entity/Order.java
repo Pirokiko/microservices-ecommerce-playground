@@ -2,10 +2,12 @@ package dev.pirokiko.commerceshop.order.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
+import org.openapitools.client.model.PaymentDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @Table(name = "\"order\"")
 @Entity
@@ -23,8 +25,8 @@ public class Order {
     private Long customerId;
 
     // Managed in the payment micro-service (updated through messaging)
-    private Long paymentId;
-    private Long paymentStatus;
+    private UUID paymentId;
+    private PaymentDto.StatusEnum paymentStatus;
 
     private Boolean verified;
 
