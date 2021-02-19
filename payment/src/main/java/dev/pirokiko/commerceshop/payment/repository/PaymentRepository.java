@@ -1,4 +1,4 @@
-package dev.pirokiko.commerceshop.payment;
+package dev.pirokiko.commerceshop.payment.repository;
 
 import dev.pirokiko.commerceshop.payment.entity.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;

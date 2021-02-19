@@ -1,6 +1,6 @@
 package dev.pirokiko.commerceshop.payment.service;
 
-import dev.pirokiko.commerceshop.payment.PaymentRepository;
+import dev.pirokiko.commerceshop.payment.repository.PaymentRepository;
 import dev.pirokiko.commerceshop.payment.dto.CreatePaymentDto;
 import dev.pirokiko.commerceshop.payment.entity.Payment;
 import dev.pirokiko.commerceshop.payment.enums.PaymentStatus;

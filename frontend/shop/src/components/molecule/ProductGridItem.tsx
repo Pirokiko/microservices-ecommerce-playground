@@ -3,12 +3,13 @@ import {Product} from "../../types/entities";
 import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography} from "@material-ui/core";
 import {ShoppingCart} from "@material-ui/icons";
 import {useAddCartItem} from "../providers/ShoppingCartProvider";
-import {getImageUrl} from "../../util/placeholder";
+import {getImageUrl, getText} from "../../util/placeholder";
 
 export const ProductGridItem: FC<{ item: Product }> = ({item}) => {
     const addCartItem = useAddCartItem();
 
     const url = useMemo(() => getImageUrl(400, 200), []);
+    const text = useMemo(() => getText(), []);
 
     return (
         <Card>
@@ -23,7 +24,7 @@ export const ProductGridItem: FC<{ item: Product }> = ({item}) => {
                         {item.name}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        Some beautiful description about this marvelous product. You know the drill.
+                        {text}
                     </Typography>
                 </CardContent>
             </CardActionArea>

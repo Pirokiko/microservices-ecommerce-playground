@@ -2,17 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {Listing} from "../template/Listing";
 import {Product} from "../../types/entities";
 import {ProductGridItem} from "../molecule/ProductGridItem";
-import {ShoppingCart} from "../organism/ShoppingCart";
-import {makeStyles, Theme} from "@material-ui/core";
-
-const useStyles = makeStyles((theme: Theme) => ({
-    shoppingCart: {
-        position: 'fixed',
-        top: theme.spacing(4),
-        right: theme.spacing(4),
-        zIndex: 10000,
-    }
-}))
+// import {makeStyles, Theme} from "@material-ui/core";
+//
+// const useStyles = makeStyles((theme: Theme) => ({
+//     shoppingCart: {
+//         position: 'fixed',
+//         top: theme.spacing(4),
+//         right: theme.spacing(4),
+//         zIndex: 10000,
+//     }
+// }))
 
 const generateName = (ln = 10) => {
     const set = "abcdefghijklmnopqrstuvwxyz";
@@ -51,7 +50,6 @@ const useProducts = (): [Product[], boolean] => {
 };
 
 export const ProductGrid = () => {
-    const styles = useStyles();
     const [products, loading] = useProducts();
     console.log(products);
 
@@ -59,7 +57,6 @@ export const ProductGrid = () => {
     const component = loading ? undefined : ProductGridItem;
 
     return <>
-        <ShoppingCart className={styles.shoppingCart}/>
         <Listing items={items} loading={loading} itemComponent={component}/>
     </>
 }

@@ -16,8 +16,6 @@ public class OrderItem {
     @SequenceGenerator(name = "order_item_id_seq", sequenceName = "order_item_id_seq")
     private Long id;
 
-    private Boolean verified;
-
     @NotNull
     private Long productId;
 

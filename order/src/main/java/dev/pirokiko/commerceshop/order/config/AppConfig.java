@@ -1,6 +1,7 @@
 package dev.pirokiko.commerceshop.order.config;
 
 import org.openapitools.client.api.PaymentControllerApi;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

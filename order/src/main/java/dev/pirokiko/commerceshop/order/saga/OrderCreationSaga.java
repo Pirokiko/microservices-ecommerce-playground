@@ -1,7 +1,6 @@
 package dev.pirokiko.commerceshop.order.saga;
 
 import dev.pirokiko.commerceshop.order.dto.CreateOrderDto;
-import dev.pirokiko.commerceshop.order.dto.OrderVerificationDto;
 import dev.pirokiko.commerceshop.order.entity.Order;
 import dev.pirokiko.commerceshop.order.repository.OrderRepository;
 import dev.pirokiko.commerceshop.order.saga.verifier.OrderCreationVerifier;

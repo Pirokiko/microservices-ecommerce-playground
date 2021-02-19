@@ -19,54 +19,25 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class OrderCreationVerifier {
     private final OrderRepository orderRepository;
-    private final InventoryServiceApi inventoryApi;
-    private final CustomerServiceApi customerApi;
+    private final OrderCustomerVerifier orderCustomerVerifier;
+    private final OrderItemsVerifier orderItemsVerifier;
 
-    public OrderCreationVerifier(OrderRepository orderRepository, InventoryServiceApi inventoryApi, CustomerServiceApi customerApi) {
+    public OrderCreationVerifier(OrderRepository orderRepository, OrderCustomerVerifier orderCustomerVerifier, OrderItemsVerifier orderItemsVerifier) {
         this.orderRepository = orderRepository;
-        this.inventoryApi = inventoryApi;
-        this.customerApi = customerApi;
+        this.orderCustomerVerifier = orderCustomerVerifier;
+        this.orderItemsVerifier = orderItemsVerifier;
     }
 
     public CompletableFuture<@NotNull OrderVerificationDto> verifyAsync(final Long orderId) {
-        return CompletableFuture.completedFuture(this.verify(orderId));
-    }
-
-    public @NotNull OrderVerificationDto verify(final Long orderId) {
-        Order order = orderRepository.findByIdWithItems(orderId).orElseThrow();
-
-        boolean itemsVerified = checkItems(order);
-        boolean customerVerified = checkCustomer(order);
-        boolean verified = itemsVerified && customerVerified;
-
-        return new OrderVerificationDto(order, verified);
-    }
-
-    // This is where Spring Cloud Contract comes into play
-    private boolean checkItems(final Order order) {
-        order.getItems().forEach(item -> {
-            try {
-                ProductDto productDto = inventoryApi.getProduct(item.getProductId());
-                item.setVerified(!item.getProductCost().equals(productDto.getCost()));
-            } catch (RestClientException e) {
-                log.error("api call failed: ", e);
-                item.setVerified(false);
-            }
-        });
-
-        // Save changes
-        orderRepository.flush();
-
-        return order.getItems().stream().map(OrderItem::getVerified).reduce(true, Boolean::logicalAnd);
-    }
-
-    // This is where Spring Cloud Contract comes into play
-    private boolean checkCustomer(final Order order) {
-        try {
-            CustomerDto customerDto = customerApi.getCustomer(order.getCustomerId());
-            return customerDto != null && customerDto.getId().equals(order.getCustomerId());
-        } catch (RestClientException e) {
-            return false;
-        }
+        CompletableFuture<Boolean> customerVerification = orderCustomerVerifier.verify(orderId);
+        CompletableFuture<Boolean> itemsVerification = orderItemsVerifier.verify(orderId);
+        return CompletableFuture.allOf(customerVerification, itemsVerification)
+                .thenApply((empty) -> {
+                    Order order = orderRepository.findById(orderId).orElseThrow();
+                    Boolean customerVerified = customerVerification.join(); // Should not involve waiting as it should already be completed
+                    Boolean itemsVerified = itemsVerification.join(); // Should not involve waiting as it should already be completed
+                    Boolean verified = customerVerified && itemsVerified;
+                    return new OrderVerificationDto(order, verified);
+                });
     }
 }

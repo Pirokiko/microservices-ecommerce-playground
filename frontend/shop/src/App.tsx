@@ -2,11 +2,14 @@ import React from 'react';
 import './App.css';
 import {ProductGrid} from "./components/page/ProductGrid";
 import {ShoppingCartProvider} from "./components/providers/ShoppingCartProvider";
+import {BasePage} from "./components/template/BasePage";
 
 function App() {
     return (
         <ShoppingCartProvider>
-            <ProductGrid/>
+            <BasePage>
+                <ProductGrid/>
+            </BasePage>
         </ShoppingCartProvider>
     );
 }

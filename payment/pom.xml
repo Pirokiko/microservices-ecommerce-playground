@@ -11,6 +11,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>payment</name>
 	<description>Payment service</description>
+
 	<properties>
 
 	</properties>

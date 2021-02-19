@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/order/order.iml" filepath="$PROJECT_DIR$/order/order.iml" />
       <module fileurl="file://$PROJECT_DIR$/payment/payment.iml" filepath="$PROJECT_DIR$/payment/payment.iml" />
       <module fileurl="file://$PROJECT_DIR$/payment-client/payment-client.iml" filepath="$PROJECT_DIR$/payment-client/payment-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rabbit-messages/rabbit-messages.iml" filepath="$PROJECT_DIR$/rabbit-messages/rabbit-messages.iml" />
     </modules>
   </component>
 </project>

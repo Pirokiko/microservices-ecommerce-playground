@@ -11,6 +11,7 @@
         <module>inventory</module>
 
         <module>order</module>
+        <module>rabbit-messages</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -74,7 +75,22 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.5.3</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.pirokiko.commerce-shop</groupId>
+            <artifactId>rabbit-messages</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

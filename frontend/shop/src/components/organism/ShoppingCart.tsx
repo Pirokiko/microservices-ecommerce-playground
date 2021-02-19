@@ -5,7 +5,7 @@ import {ProductGridItem} from "../molecule/ProductGridItem";
 import {useCart} from "../providers/ShoppingCartProvider";
 import {OrderButton} from "./OrderButton";
 
-const ShoppingCartIcon: FC<StyledProps & { onClick: AvatarProps['onClick'] }> = ({className, onClick}) => {
+const ShoppingCartIcon: FC<Partial<StyledProps> & { onClick: AvatarProps['onClick'] }> = ({className, onClick}) => {
     return <Avatar className={className} onClick={onClick}>
         <ShoppingCartOutlined/>
     </Avatar>
@@ -23,7 +23,7 @@ const ShoppingCartDrawer: FC<DrawerProps> = ({children, ...drawerProps}) => {
 }
 
 
-export const ShoppingCart: FC<StyledProps> = ({className}) => {
+export const ShoppingCart: FC<Partial<StyledProps>> = ({className}) => {
     const [open, setOpen] = useState(false);
     return <>
         <ShoppingCartIcon className={className} onClick={() => setOpen(true)}/>

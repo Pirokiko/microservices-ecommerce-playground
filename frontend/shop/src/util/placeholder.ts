@@ -1,3 +1,6 @@
+import {slipsum} from "./lorem-ipsum/slipsum";
+import {cheeseIpsum} from "./lorem-ipsum/cheese";
+
 const placeholderlist = [
     "http://via.placeholder.com/{w}x{h}",
     "https://www.placecage.com/{w}/{h}",
@@ -16,4 +19,17 @@ export const getImageUrl = (width: number, height: number) => {
         .replace('{w}', '' + width)
         .replace('{h}', '' + height)
         .concat("?id=" + Math.random()) // Make each image unique, as much as possible
+}
+
+
+type TextGenerator = (nrOfParagraphs: number) => string[];
+
+const textGeneratorList: TextGenerator[] = [
+    slipsum,
+    cheeseIpsum,
+]
+
+export const getText = (nrOfParagraphs: number = 1) => {
+    const idx = Math.floor(textGeneratorList.length * Math.random());
+    return textGeneratorList[idx](nrOfParagraphs);
 }
