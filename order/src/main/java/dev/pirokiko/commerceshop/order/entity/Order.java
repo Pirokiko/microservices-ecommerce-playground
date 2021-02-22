@@ -1,8 +1,8 @@
 package dev.pirokiko.commerceshop.order.entity;
 
+import dev.pirokiko.commerceshop.order.enums.PaymentStatus;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
-import org.openapitools.client.model.PaymentDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,15 +26,15 @@ public class Order {
 
     // Managed in the payment micro-service (updated through messaging)
     private UUID paymentId;
-    private PaymentDto.StatusEnum paymentStatus;
+    private PaymentStatus paymentStatus;
 
     private Boolean verified;
 
     @OneToMany
-    @Cascade(value = { org.hibernate.annotations.CascadeType.ALL })
+    @Cascade(value = {org.hibernate.annotations.CascadeType.ALL})
     private List<OrderItem> items;
 
-    public Double getCost(){
+    public Double getCost() {
         return items.stream().map(OrderItem::getCost).reduce(Double::sum).orElse(0.0);
     }
 }

@@ -7,11 +7,12 @@ import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@EnableRabbit
 @Configuration
 public class RabbitConfig {
     private static final String EXCHANGE_NAME = RabbitConfigStatics.Exchanges.EXCHANGE_NAME;
@@ -37,9 +38,8 @@ public class RabbitConfig {
         return getInventoryQueueBinding(RabbitConfigStatics.RoutingKeys.VERIFY_ORDER_ITEMS_REQUEST);
     }
 
-    // Enforce a connection to be created, even if "somehow" configuration alone doesn't require it
     @Bean
-    ApplicationRunner runner(ConnectionFactory cf) {
-        return args -> cf.createConnection().close();
+    public MessageConverter jsonMessageConverter(){
+        return new Jackson2JsonMessageConverter();
     }
 }

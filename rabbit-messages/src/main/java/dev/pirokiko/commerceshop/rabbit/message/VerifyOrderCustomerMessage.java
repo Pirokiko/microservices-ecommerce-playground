@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @Builder
-public class VerifyOrderCustomerMessage implements Serializable {
+public class VerifyOrderCustomerMessage {
     @NotNull
     private final Long orderId;
     @NotNull

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @SuperBuilder
-public class VerifyOrderItemsMessage implements Serializable {
+public class VerifyOrderItemsMessage {
     private final Long orderId;
     private final List<OrderItemDto> items;
 

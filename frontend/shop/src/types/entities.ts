@@ -13,6 +13,13 @@ export interface Product extends BaseEntity {
 export interface Order extends BaseEntity {
     orderNumber: UUID;
     customerId: ID;
+    items: OrderItem[];
+}
+
+export interface OrderItem extends BaseEntity {
+    productId: ID;
+    productCost: number;
+    quantity: number;
 }
 
 export interface Customer extends BaseEntity {

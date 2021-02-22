@@ -25,7 +25,9 @@ public class CreatePaymentSaga {
     public PaymentDto createPayment(CreatePaymentDto createPaymentDto) {
         Payment payment = createPaymentService.createPayment(createPaymentDto);
 
-        amqpTemplate.convertAndSend(RabbitConfigStatics.RoutingKeys.PAYMENT_CREATED, objectMapper.convertValue(payment, PaymentCreatedMessage.class));
+        PaymentCreatedMessage message = objectMapper.convertValue(payment, PaymentCreatedMessage.class);
+        message.setOrderId(createPaymentDto.getOrderId());
+        amqpTemplate.convertAndSend(RabbitConfigStatics.RoutingKeys.PAYMENT_CREATE_RESPONSE, message);
 
         return objectMapper.convertValue(payment, PaymentDto.class);
     }

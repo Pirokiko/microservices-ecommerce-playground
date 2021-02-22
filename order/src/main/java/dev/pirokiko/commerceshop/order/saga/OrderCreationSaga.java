@@ -5,7 +5,6 @@ import dev.pirokiko.commerceshop.order.entity.Order;
 import dev.pirokiko.commerceshop.order.repository.OrderRepository;
 import dev.pirokiko.commerceshop.order.saga.verifier.OrderCreationVerifier;
 import dev.pirokiko.commerceshop.order.service.OrderCreationService;
-import dev.pirokiko.commerceshop.order.service.PaymentCreationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -14,15 +13,12 @@ import org.springframework.stereotype.Component;
 public class OrderCreationSaga {
     private final OrderCreationService orderCreationService;
     private final OrderCreationVerifier orderCreationVerifier;
-    private final PaymentCreationService paymentCreationService;
     private final OrderRepository orderRepository;
 
     public OrderCreationSaga(
-            OrderCreationService orderCreationService, OrderCreationVerifier orderCreationVerifier,
-            PaymentCreationService paymentCreationService, OrderRepository orderRepository) {
+            OrderCreationService orderCreationService, OrderCreationVerifier orderCreationVerifier, OrderRepository orderRepository) {
         this.orderCreationService = orderCreationService;
         this.orderCreationVerifier = orderCreationVerifier;
-        this.paymentCreationService = paymentCreationService;
         this.orderRepository = orderRepository;
     }
 
@@ -37,8 +33,7 @@ public class OrderCreationSaga {
                     orderRepository.flush();
                     return orderVerificationDto.getOrder().getId();
                 })
-                .thenApplyAsync(paymentCreationService::createPayment)
-                .whenComplete((paymentDto, error) -> {
+                .whenComplete((orderId, error) -> {
                     if (error != null) {
                         log.error("Error occurred during async processing", error);
                     }

@@ -21,7 +21,8 @@ public class RabbitConfigStatics {
 
         public static final String NEW_ORDER_VERIFIED = "order.new.verified";
 
-        public static final String PAYMENT_CREATED = "payment.created";
+        public static final String PAYMENT_CREATE_REQUEST = "payment.create.request";
+        public static final String PAYMENT_CREATE_RESPONSE = "payment.create.response";
     }
 
 

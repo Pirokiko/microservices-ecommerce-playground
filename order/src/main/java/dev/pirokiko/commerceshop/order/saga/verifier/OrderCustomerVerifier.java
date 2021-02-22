@@ -20,7 +20,6 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Component
-@RabbitListener
 public class OrderCustomerVerifier {
     private final OrderRepository orderRepository;
     private final RabbitTemplate rabbitTemplate;
@@ -46,8 +45,7 @@ public class OrderCustomerVerifier {
         return cf;
     }
 
-    @RabbitHandler
-    protected void handleVerificationMessage(VerifyOrderCustomerResultMessage message) {
+    public void handleVerificationMessage(VerifyOrderCustomerResultMessage message) {
         CompletableFuture<Boolean> cf = callbackMap.get(message.getOrderId());
         if (cf == null) {
             throw new InvalidParameterException();

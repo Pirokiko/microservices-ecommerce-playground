@@ -11,14 +11,14 @@ const ShoppingCartIcon: FC<Partial<StyledProps> & { onClick: AvatarProps['onClic
     </Avatar>
 }
 
-const ShoppingCartDrawer: FC<DrawerProps> = ({children, ...drawerProps}) => {
+const ShoppingCartDrawer: FC<DrawerProps & { close: () => void }> = ({children, close, ...drawerProps}) => {
     const items = useCart();
     return <Drawer {...drawerProps} style={{background: 'darkred', maxWidth: 300}}>
         {items.map(item => <React.Fragment key={item.product.id}>
             <Typography variant={"caption"}>{item.quantity} times</Typography>
             <ProductGridItem item={item.product}/>
         </React.Fragment>)}
-        <OrderButton />
+        <OrderButton onClick={close}/>
     </Drawer>
 }
 
@@ -27,6 +27,6 @@ export const ShoppingCart: FC<Partial<StyledProps>> = ({className}) => {
     const [open, setOpen] = useState(false);
     return <>
         <ShoppingCartIcon className={className} onClick={() => setOpen(true)}/>
-        <ShoppingCartDrawer open={open} onClose={() => setOpen(false)} />
+        <ShoppingCartDrawer open={open} close={() => setOpen(false)} onClose={() => setOpen(false)}/>
     </>
 };

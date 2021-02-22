@@ -1,14 +1,14 @@
-import React from 'react';
-import orderApi from "../../api/orderApi";
+import React, {FC} from 'react';
 import {Button} from "@material-ui/core";
-import {useCart} from "../providers/ShoppingCartProvider";
 import {Money} from "@material-ui/icons";
+import {Page, useChangePage} from "../providers/PageProvider";
 
-export const OrderButton = () => {
-    const items = useCart();
+export const OrderButton:FC<{onClick?:() => void}> = ({onClick}) => {
+    const changePage = useChangePage();
     return <Button onClick={() => {
-        orderApi.order(items);
-    }} startIcon={<Money />}>
+        onClick && onClick();
+        changePage(Page.Order);
+    }} startIcon={<Money/>}>
         Bestellen
     </Button>
 };

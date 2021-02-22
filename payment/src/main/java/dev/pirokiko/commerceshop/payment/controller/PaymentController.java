@@ -3,11 +3,11 @@ package dev.pirokiko.commerceshop.payment.controller;
 import dev.pirokiko.commerceshop.payment.dto.CreatePaymentDto;
 import dev.pirokiko.commerceshop.payment.dto.PaymentDto;
 import dev.pirokiko.commerceshop.payment.saga.CreatePaymentSaga;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
+@CrossOrigin
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
@@ -18,7 +18,7 @@ public class PaymentController {
     }
 
     @PostMapping("")
-    public PaymentDto createPayment(@RequestBody CreatePaymentDto createPaymentDto){
+    public PaymentDto createPayment(@RequestBody @Valid CreatePaymentDto createPaymentDto) {
         return createPaymentSaga.createPayment(createPaymentDto);
     }
 }

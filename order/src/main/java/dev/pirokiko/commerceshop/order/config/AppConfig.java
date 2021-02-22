@@ -1,7 +1,5 @@
 package dev.pirokiko.commerceshop.order.config;
 
-import org.openapitools.client.api.PaymentControllerApi;
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -17,14 +15,6 @@ public class AppConfig {
     @Bean
     public RestTemplate getInventoryRestTemplate(RestTemplateBuilder restTemplateBuilder){
         return restTemplateBuilder.rootUri("http://localhost:9002").build();
-    }
-
-    @Qualifier("payment")
-    @Bean
-    public PaymentControllerApi getPaymentControllerApi(){
-        PaymentControllerApi api = new PaymentControllerApi();
-        System.out.println(api.getApiClient().getBasePath());
-        return api;
     }
 
     @Qualifier("customer")
